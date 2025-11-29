@@ -1,0 +1,7 @@
+SELECT *
+FROM Employees
+WHERE name = 'David'
+
+SELECT *
+FROM Employees
+WHERE job_id = 'IT_PROG'
