@@ -1,0 +1,211 @@
+openapi: 3.0.0
+info:
+  title: Hotel API
+  version: 1.0.0
+  description: API для поиска отелей, бронирования номеров и управления бронями
+
+servers:
+  - url: https://api.hotel.com/v1
+
+paths:
+  /hotels:
+    get:
+      summary: Получить список отелей
+      parameters:
+        - name: city
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: stars
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Список отелей
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hotel'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /hotels/{hotelId}/rooms:
+    get:
+      summary: Получить номера отеля
+      parameters:
+        - name: hotelId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Список номеров
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Room'
+        '404':
+          description: Отель не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /bookings:
+    post:
+      summary: Создать бронь
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewBooking'
+      responses:
+        '201':
+          description: Бронь создана
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /bookings/{bookingId}:
+    put:
+      summary: Обновить бронь
+      parameters:
+        - name: bookingId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+      responses:
+        '200':
+          description: Бронь обновлена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        '404':
+          description: Бронь не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Отменить бронь
+      parameters:
+        - name: bookingId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Бронь отменена
+        '404':
+          description: Бронь не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Hotel:
+      type: object
+      required: [id, hotelname, city]
+      properties:
+        id:
+          type: string
+        hotelname:
+          type: string
+        city:
+          type: string
+        stars:
+          type: integer
+        features:
+          type: array
+          items:
+            type: string
+
+    Room:
+      type: object
+      required: [id, hotelid, roomtype, cost, isfree]
+      properties:
+        id:
+          type: string
+        hotelid:
+          type: string
+        roomtype:
+          type: string
+        cost:
+          type: number
+        isfree:
+          type: boolean
+
+    NewBooking:
+      type: object
+      required: [roomid, name, datefrom, dateto]
+      properties:
+        roomid:
+          type: string
+        name:
+          type: string
+        datefrom:
+          type: string
+          format: date
+        dateto:
+          type: string
+          format: date
+
+    Booking:
+      type: object
+      required: [bookingid, roomid, name, datefrom, dateto]
+      properties:
+        bookingid:
+          type: string
+        roomid:
+          type: string
+        name:
+          type: string
+        datefrom:
+          type: string
+          format: date
+        dateto:
+          type: string
+          format: date
+        state:
+          type: string
+
+    Error:
+      type: object
+      required: [code, errormessage]
+      properties:
+        code:
+          type: integer
+        errormessage:
+          type: string
