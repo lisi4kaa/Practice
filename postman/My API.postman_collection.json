@@ -1,0 +1,1228 @@
+{
+	"info": {
+		"_postman_id": "bafe4480-30a9-4cde-9b71-7e3948dd23d0",
+		"name": "My API",
+		"description": "Workout Service API collection generated from YAML. Uses {{baseUrl}} and {{authToken}} variables.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50303161",
+		"_collection_link": "https://lisa-asvetimskaya-1865566.postman.co/workspace/%25D0%259B%25D0%25B8%25D0%25B7%25D0%25B0-%25D0%2590%25D1%2581%25D0%25B2%25D0%25B5%25D1%2582%25D0%25B8%25D0%25BC%25D1%2581%25D0%25BA%25D0%25B0%25D1%258F's-Workspace~6aa131cb-1123-4540-807e-48081e7f3778/collection/50303161-bafe4480-30a9-4cde-9b71-7e3948dd23d0?action=share&source=collection_link&creator=50303161"
+	},
+	"item": [
+		{
+			"name": "Workouts",
+			"item": [
+				{
+					"name": "Create workout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });",
+									"var jsonData = pm.response.json();",
+									"pm.expect(jsonData).to.have.property('id');",
+									"pm.expect(jsonData).to.have.property('name');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"name\": \"Leg Day\",\n  \"description\": \"Squats, lunges, deadlifts\",\n  \"userId\": 100\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/createWorkout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"createWorkout"
+							]
+						},
+						"description": "Создать новую тренировку"
+					},
+					"response": []
+				},
+				{
+					"name": "Update workout (PUT /workouts/{id})",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('id', 1);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"name\": \"Leg Day - updated\",\n  \"description\": \"Add calf raises\",\n  \"userId\": 100\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/workouts/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"workouts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						},
+						"description": "Обновить тренировку по id"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all workouts (XML)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/xml"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/workouts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"workouts"
+							]
+						},
+						"description": "Получить список всех тренировок (XML)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete workout (POST /workouts/{id}/delete)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('id', 1);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/workouts/:id/delete",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"workouts",
+								":id",
+								"delete"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Удалить тренировку по id (нестандартный путь из YAML)"
+					},
+					"response": []
+				},
+				{
+					"name": "Start workout",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('id', 1);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/workouts/:id/start",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"workouts",
+								":id",
+								"start"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Запустить тренировку (по YAML — GET)"
+					},
+					"response": []
+				},
+				{
+					"name": "Mark workout as completed",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('id', 1);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/workouts/:id/complete",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"workouts",
+								":id",
+								"complete"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Отметить тренировку завершённой (корректный метод: POST)"
+					},
+					"response": []
+				},
+				{
+					"name": "Completed workouts by date",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('date', '2025-12-01');"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/workouts/completed/:date",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"workouts",
+								"completed",
+								":date"
+							],
+							"variable": [
+								{
+									"key": "date"
+								}
+							]
+						},
+						"description": "Получить завершённые тренировки за дату"
+					},
+					"response": []
+				},
+				{
+					"name": "Patch workout status (action, workoutId)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('action','pause'); pm.variables.set('workoutId', 1);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/workouts?action={{action}}&workoutId={{workoutId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"workouts"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "{{action}}"
+								},
+								{
+									"key": "workoutId",
+									"value": "{{workoutId}}"
+								}
+							]
+						},
+						"description": "Обновить статус тренировки (query: action, workoutId)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get workouts v2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/v2/workouts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v2",
+								"workouts"
+							]
+						},
+						"description": "Получить список тренировок (версия 2)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get workout history",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/history/workouts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"history",
+								"workouts"
+							]
+						},
+						"description": "История тренировок"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Exercises",
+			"item": [
+				{
+					"name": "Create exercise",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 201', function () { pm.response.to.have.status(201); });\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.expect(jsonData).to.have.property('id');\r",
+									"pm.expect(jsonData).to.have.property('name');\r",
+									"pm.expect(jsonData).to.have.property('sets');\r",
+									"pm.expect(jsonData).to.have.property('reps');"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 10,\n  \"name\": \"Squat\",\n  \"sets\": 5,\n  \"reps\": 5\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/exercises",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"exercises"
+							]
+						},
+						"description": "Создать упражнение"
+					},
+					"response": []
+				},
+				{
+					"name": "Update exercise (PUT /exercises/{id}, XML body)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('id', 10);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/xml"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<Exercise>\r\n    <id>10</id>\r\n    <name>Front Squat</name>\r\n    <sets>4</sets>\r\n    <reps>6</reps>\r\n</Exercise>"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/exercises/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"exercises",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Обновить упражнение по id (XML)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get exercises for workout",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('workoutId', 1);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });",
+									"var jsonData = pm.response.json();",
+									"pm.expect(jsonData).to.be.an('array');",
+									"pm.test('Response is array of workouts', function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"    if (jsonData.length > 0) {",
+									"        pm.expect(jsonData[0]).to.have.property('id');",
+									"        pm.expect(jsonData[0]).to.have.property('name');",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/workout/exercises/:workoutId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"workout",
+								"exercises",
+								":workoutId"
+							],
+							"variable": [
+								{
+									"key": "workoutId",
+									"value": ""
+								}
+							]
+						},
+						"description": "Получить упражнения для тренировки"
+					},
+					"response": []
+				},
+				{
+					"name": "Add exercise to workout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });\r",
+									"pm.test('Response has success message', function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('message');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"exerciseId\": 10,\n  \"workoutId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/workouts/exercises",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"workouts",
+								"exercises"
+							]
+						},
+						"description": "Добавить упражнение в тренировку"
+					},
+					"response": []
+				},
+				{
+					"name": "Get exercises for user workout (deep path)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('userId', 100); pm.variables.set('workoutId', 1);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/data/users/:userId/data/workouts/:workoutId/data/exercises",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"data",
+								"users",
+								":userId",
+								"data",
+								"workouts",
+								":workoutId",
+								"data",
+								"exercises"
+							],
+							"variable": [
+								{
+									"key": "userId"
+								},
+								{
+									"key": "workoutId"
+								}
+							]
+						},
+						"description": "Упражнения по тренировке пользователя (глубокий путь)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get user workouts",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('userId', 100);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/:userId/workouts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":userId",
+								"workouts"
+							],
+							"variable": [
+								{
+									"key": "userId"
+								}
+							]
+						},
+						"description": "Список тренировок пользователя (нижний регистр user)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get user workouts (uppercase path)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('id', 100);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/USERS/:id/WORKOUTS",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"USERS",
+								":id",
+								"WORKOUTS"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						},
+						"description": "Список тренировок пользователя (верхний регистр)"
+					},
+					"response": []
+				},
+				{
+					"name": "List user workouts (prefixed /api)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('userId', 100);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/workouts/list",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"workouts",
+								"list"
+							],
+							"variable": [
+								{
+									"key": "userId"
+								}
+							]
+						},
+						"description": "Список тренировок пользователя (в YAML указан лишний префикс /api)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Progress",
+			"item": [
+				{
+					"name": "Get user progress (query params)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('userId', 100); pm.variables.set('progressId', 5001);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/progress?userId={{userId}}&progressId={{progressId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"progress"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								},
+								{
+									"key": "progressId",
+									"value": "{{progressId}}"
+								}
+							]
+						},
+						"description": "Прогресс пользователя: userId, progressId в query"
+					},
+					"response": []
+				},
+				{
+					"name": "Get user progress (path params)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('user_id', 100); pm.variables.set('progressId', 5001);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:user_id/progress/:progressId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":user_id",
+								"progress",
+								":progressId"
+							],
+							"variable": [
+								{
+									"key": "user_id"
+								},
+								{
+									"key": "progressId"
+								}
+							]
+						},
+						"description": "Прогресс пользователя: user_id и progressId в path"
+					},
+					"response": []
+				},
+				{
+					"name": "Get workout progress for user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('workoutId', 1); pm.variables.set('userId', 100);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/progress/workouts/:workoutId/users/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"progress",
+								"workouts",
+								":workoutId",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "workoutId"
+								},
+								{
+									"key": "userId"
+								}
+							]
+						},
+						"description": "Прогресс конкретной тренировки по пользователю"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Analytics",
+			"item": [
+				{
+					"name": "Improvement analytics",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200 or 250', function () {",
+									"  pm.expect([200,250]).to.include(pm.response.code);",
+									"});",
+									"if (pm.response.headers.get('Content-Type') && pm.response.headers.get('Content-Type').includes('application/json')) {",
+									"  var jsonData = pm.response.json();",
+									"  pm.expect(jsonData).to.have.property('improvementRate');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/analytics/improvement",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"analytics",
+								"improvement"
+							]
+						},
+						"description": "Аналитика по улучшению"
+					},
+					"response": []
+				},
+				{
+					"name": "Workout history (analytics)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/analytics/history",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"analytics",
+								"history"
+							]
+						},
+						"description": "История тренировок (аналитика)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Planning",
+			"item": [
+				{
+					"name": "Get training schedule (JSON)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });",
+									"var jsonData = pm.response.json();",
+									"pm.expect(jsonData).to.have.property('plannedWorkouts');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/planning/schedule",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"planning",
+								"schedule"
+							]
+						},
+						"description": "Получить расписание тренировок (JSON)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get training schedule (PDF)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status is 200', function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/pdf"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/planning/schedule",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"planning",
+								"schedule"
+							]
+						},
+						"description": "Получить расписание тренировок (PDF)"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080/api"
+		},
+		{
+			"key": "authToken",
+			"value": ""
+		}
+	]
+}
